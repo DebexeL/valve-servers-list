@@ -50,7 +50,7 @@ function protect_page() {
 
 function admin_page() {
 	global $user_data;
-	if(is_admin($user_data['user_id']) == false) {
+	if(is_admin($user_data['user_id']) != 1) {
 		header('Location: index.php');
 		exit();
 	}

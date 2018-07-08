@@ -26,10 +26,13 @@ function update_user($user_id, $update_data) {
 
 function is_admin($user_id) {
     global $database;
-
-    $user_id = (INT)$user_id;
-	return ($database->query("SELECT COUNT(`user_id`) FROM `users` WHERE `user_id` = {$user_id} AND `type` = 1")->num_rows);
-}
+	
+    //_OLD JUST FOR REFERENCE_return ($database->query("SELECT `type` FROM `users` WHERE `user_id` = {$user_id}")->num_rows);
+	$user_id = (INT)$user_id;
+	$query = $database->query("SELECT `type` FROM `users` WHERE `user_id` = '{$user_id}'");
+	return $query->fetch_object()->type;
+	
+	}
 
 function activate($email, $email_code) {
     global $database;
@@ -37,7 +40,7 @@ function activate($email, $email_code) {
     $email		= $database->escape_string($email);
 	$email_code = $database->escape_string($email_code);
 	
-	if($database->query("SELECT COUNT(`user_id`) FROM `users` WHERE `email` = '$email' AND `email_code` = '$email_code' AND `active` = 0")->num_rows) {
+	if($database->query("SELECT `user_id` FROM `users` WHERE `email` = '$email' AND `email_code` = '$email_code' AND `active` = 0")->num_rows) {
 		$database->query("UPDATE `users` SET `active` = 1 WHERE `email` = '$email'");
 
         return true;
@@ -107,20 +110,87 @@ function logged_in() {
 	return (isset($_SESSION['user_id'])) ? true : false;
 }
 
-function email_exists($email) {
-    global $database;
-
-    $email = sanitize($email);
-
-    return $database->query("SELECT COUNT(`user_id`) FROM `users` WHERE `email` = '{$email}'")->num_rows;
-}
-
 function user_exists($username) {
-    global $database;
+global $database;
+$username = sanitize($username);
+$query = "SELECT `username` FROM `users` WHERE username=?";
 
-    $username = sanitize($username);
-	return $database->query("SELECT COUNT(`user_id`) FROM `users` WHERE `username` = '{$username}'")->num_rows;
+if ($stmt = $database->prepare($query)){
+
+        $stmt->bind_param("s", $username);
+
+        if($stmt->execute()){
+            $stmt->store_result();
+
+            $username_check= "";         
+            $stmt->bind_result($username_check);
+            $stmt->fetch();
+
+            if ($stmt->num_rows == 1){
+
+            return true;
+			} else {
+			return false;
+
+            }
+        }
+    }
 }
+
+
+
+function email_exists($email) {
+global $database;
+$email = sanitize($email);
+$query = "SELECT `email` FROM `users` WHERE email=?";
+
+if ($stmt = $database->prepare($query)){
+
+        $stmt->bind_param("s", $email);
+
+        if($stmt->execute()){
+            $stmt->store_result();
+
+            $email_check= "";         
+            $stmt->bind_result($email_check);
+            $stmt->fetch();
+
+            if ($stmt->num_rows == 1){
+
+            return true;
+			} else {
+			return false;
+
+            }
+        }
+    }
+}
+function reg_user_exists($username) {
+global $database;
+$username = sanitize($username);
+$query = "SELECT `username` FROM `users` WHERE username=?";
+
+if ($stmt = $database->prepare($query)){
+
+        $stmt->bind_param("s", $username);
+
+        if($stmt->execute()){
+            $stmt->store_result();
+
+            $username_check= "";         
+            $stmt->bind_result($username_check);
+            $stmt->fetch();
+
+            if ($stmt->num_rows == 1){
+
+            echo "That username already exists.";
+            exit;
+
+            }
+        }
+    }
+}
+
 
 function user_active($username) {
     global $database;
@@ -148,6 +218,6 @@ function login($username, $password) {
     $user_id = user_id_from_username($username);
 	$username = sanitize($username);
 	$password = md5($password);
-	return $database->query("SELECT COUNT(`user_id`) FROM `users` WHERE `username` = '$username' AND `password` = '$password'")->num_rows;
+	return $database->query("SELECT `user_id` FROM `users` WHERE `username` = '$username' AND `password` = '$password'")->num_rows;
 }
 ?>

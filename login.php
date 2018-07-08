@@ -18,7 +18,7 @@ if(empty($_POST) == false) {
 		if($login == false) {
 			$errors[] = 'Username and password combination is incorrect';
 		} else {
-			$_SESSION['user_id'] = $login;
+			$_SESSION['user_id'] = user_id_from_username($username);
 			header('Location: index.php');
 			exit();
 		}

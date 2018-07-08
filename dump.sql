@@ -60,7 +60,7 @@ CREATE TABLE `users` (
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `active` int(11) NOT NULL DEFAULT '0',
-  `type` int(1) NOT NULL DEFAULT '0',
+  `type` varchar(5) NOT NULL DEFAULT 'user',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `date` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `last_activity` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `email_code`, `name`, `avatar`, `active`, `type`, `ip`, `date`, `last_activity`)
 VALUES
-	(1,'admin','21232f297a57a5a743894a0e4a801fc3','email','','Admin','avatars/7963843a08.png',1,1,'0.0.0.0','beginning of time','1493491396');
+	(1,'Admin','21232f297a57a5a743894a0e4a801fc3','email','','Admin','avatars/7963843a08.png',1,'admin','0.0.0.0','beginning of time','1493491396');
 
 CREATE TABLE `votes` (
   `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
