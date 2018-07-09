@@ -64,7 +64,7 @@ if(isset($_GET['success']) && empty($_GET['success'])) {
 	echo '<div class="alert alert-success">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<strong>Congratulations!</strong> You\'ve been registered successfully!';
-	if($settings['email_confirmation'] == '1') echo 'Please check your email account for activation!';
+	if($settings['email_confirmation'] == '0') echo 'Please check your email account for activation!';
 	echo '</div>';
 } else {
 	if(empty($_POST) == false && empty($errors) == true){

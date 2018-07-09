@@ -63,7 +63,7 @@ if(isset($_GET['username']) == true && empty($_GET['username']) == false){
 					
 					<tr>
 						<td><?php if($vip == 1) echo "<font color='#ffac1e'>" . $row['ip'] . "</font>"; else echo $row['ip'] ?></td>
-						<td><?php if($status == 1) echo "Unactive server"; else echo "Active server"; ?></td>
+						<td><?php if($status == 1) echo "Inactive server"; else echo "Active server"; ?></td>
 						<td><a href="server.php?id=<?php echo $row['id']; ?>"><img src="includes/img/icon_details.gif" title="Server Informations" /></a></td>
 
 					</tr>
