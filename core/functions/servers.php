@@ -27,8 +27,6 @@ function get_country($ip) {
 	return $country ;
 }
 
-
-
 function server_vip($server_id) {
     global $database;
 
@@ -62,8 +60,7 @@ function HexToRGB($hex) {
 		}
 		return $color;
 }
-	
-	
+
 function id_to_user_id($id) {
     global $database;
 
@@ -72,6 +69,4 @@ function id_to_user_id($id) {
 	$data = $query->fetch_assoc();
 	return $data['user_id'];
 }
-
-
 ?>

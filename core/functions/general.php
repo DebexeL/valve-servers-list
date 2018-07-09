@@ -58,7 +58,6 @@ function admin_page() {
 
 }
 
-
 function sanitize($data) {
     global $database;
 
