@@ -2,6 +2,9 @@
 include 'core/init.php';
 include 'includes/overall/header.php'; 
 
+//Reused the newer captcha function from https://github.com/grohsfabian/minecraft-servers-list-lite/
+$captcha = new Captcha();
+	
 $server_id  = (INT)$_GET['id'];
 $user_id	= id_to_user_id($server_id);
 $addedBy 	= username_from_user_id($user_id);
@@ -184,8 +187,8 @@ if($status == 0){
 <h2>Comments</h2>
 <?php
 $query = $database->query("SELECT * FROM `comments` WHERE `server_id` = '$server_id'");
-if($query->num_rows){
-	echo "<p>This server doesn't have any comments added</p>";
+if($query->num_rows < 1){
+	echo "<p>This server has not received any comments yet.</p>";
 }
 while($row = $query->fetch_assoc()){
 $comment_user_id  = $row['user_id'];
@@ -213,14 +216,9 @@ $comment_user_id  = $row['user_id'];
 <br /><br />
 <?php
 if(empty($_POST) == false){
-	//captcha
-	include_once "core/functions/securimage.php";
-	$securimage = new Securimage();
-	$valid = $securimage->check($_POST['captchavar']);
-	//-------
 	
-	if($valid == false) {
-		$errors[] = 'Please enter the correct captcha code!';
+	if(!$captcha->is_valid()) {
+		$errors[] = 'Captcha is incorrect! Try again.';
 	}
 	
 	if(strlen($_POST['comment']) > 254){
@@ -243,8 +241,7 @@ if(empty($_POST) == false){
 <?php if(logged_in() == true){ ?>
 <form action="" method="post">
 	<textarea style="width:100%;height:100px;" name="comment"></textarea><br />
-	<img class="img-polaroid" id="captcha" title="Captcha" src="core/functions/securimage_show.php" alt="CAPTCHA Image" />&nbsp;
-	<input class="span2" type="text" style="text-transform:uppercase;" name="captchavar" id="captchavar" size="11" maxlength="4" placeholder="captcha" /><br /><br />
+	<?php $captcha->display(); ?>
 	
 	<input type="submit" class="btn btn-primary" value="Add comment" />
 </form>

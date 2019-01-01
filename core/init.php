@@ -7,6 +7,7 @@ require 'functions/general.php';
 require 'functions/users.php';
 require 'functions/servers.php';
 require 'q.php';
+include 'classes/Captcha.php';
 
 if(logged_in() == true){
 	$session_user_id = $_SESSION['user_id'];

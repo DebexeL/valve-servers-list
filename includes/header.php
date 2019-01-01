@@ -30,8 +30,11 @@
 						</ul>
 					</li>
 					
+					<!-- The following line was used during admin/normal user access testing. 
+					<?php echo(is_admin($session_user_id));?>
+					-->
 					
-					<?php if(is_admin($session_user_id) == true) { ?>
+					<?php if(is_admin($session_user_id)) { ?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
 						<ul class="dropdown-menu">
