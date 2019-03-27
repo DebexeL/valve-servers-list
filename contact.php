@@ -35,7 +35,7 @@ if(empty($_POST) == false) {
 <h2>Contact</h2>
 <?php
 if(isset($_GET['success']) && empty($_GET['success'])) {
-	echo '<font color=\'green\'>Your message has been sent successfully!</font><br>Please allow 24-48 hours for a response!';
+	echo '<font color=\'green\'>Your message has been sent successfully!</font><br>Please allow 24 to 48 hours for a response!';
 } else {
 	if(empty($_POST) == false && empty($errors) == true){
 		mail($settings['contact_email'],  $_POST['subject'], $_POST['message'], 'From: ' . $_POST['name']);
@@ -50,7 +50,7 @@ if(isset($_GET['success']) && empty($_GET['success'])) {
 	<input class="span4" type="text" name="subject" placeholder="Title"/><br />
 	<input class="span4" type="text" name="name" placeholder="Your Name"/><br />
 	<input class="span4" type="text" name="email" placeholder="Your Email"/><br />
-	<textarea class="span4" rows="6" name="message">Message</textarea><br />
+	<textarea class="span4" rows="6" name="message" placeholder="Message"></textarea><br />
 	
 	<?php $captcha->display(); ?>
 		
