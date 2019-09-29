@@ -4,7 +4,7 @@ include 'includes/overall/header.php';
 
 //Reused the newer captcha function from https://github.com/grohsfabian/minecraft-servers-list-lite/
 $captcha = new Captcha();
-	
+
 $server_id  = (INT)$_GET['id'];
 $user_id	= id_to_user_id($server_id);
 $addedBy 	= username_from_user_id($user_id);
@@ -20,7 +20,7 @@ $server_data = $result->fetch_assoc();
 
 $last_update = time() - $server_data['cache_time'];
 $last_updateM = intval($last_update/60);
-	
+
 try {
 	$Query = new LiveStats($server_data['ip'], $server_data['port']);
 	$info = $Query->GetServer();
@@ -78,12 +78,12 @@ if($status == 0){
 			</tr>
 			<?php if($server_data['game'] !== "samp") { ?>
 			<tr>
-				<td><strong>Protocol</strong></td>
-				<td><?php echo $info->ProtocolVersion; ?></td>
+				<td><strong>Game (Gamemode)</strong></td>
+				<td><?php echo $info->Directory . " (" . $info->Description .")"; ?></td>
 			</tr>
 			<tr>
-				<td><strong>Game</strong></td>
-				<td><?php echo $info->Description; ?></td>
+				<td><strong>Protocol</strong></td>
+				<td><?php echo $info->ProtocolVersion; ?></td>
 			</tr>
 			<tr>
 				<td><strong>Bots</strong></td>
@@ -124,10 +124,10 @@ if($status == 0){
 					<div id="votes" style="display:inline;"><?php echo $server_data['votes']; ?></div> <input type="button" class="btn" id="vote" value="Vote server !">
 				</td>
 			</tr>
-			
+
 		</table>
 	</div>
-	
+
 	<div class="tab-pane" id="banners">
 		<?php 
 		$domain = $_SERVER['HTTP_HOST'];
@@ -138,7 +138,7 @@ if($status == 0){
 		<h3>BB/HTML Code </h3>
 		<textarea id="bb_small_code" rows="3" style="width: 95%;">[url=<?php echo $link; ?>/server.php?id=<?php echo $id; ?>][img]<?php echo $link; ?>/dynamic_image.php?s=<?php echo $id; ?>&type=background[/img][/url]</textarea>
 		<textarea id="html_small_code" rows="3" style="width: 95%;"><a href="<?php echo $link; ?>/server.php?id=<?php echo $id; ?>"><img src="<?php echo $link; ?>/dynamic_image.php?s=<?php echo $id; ?>&type=background"></a></textarea>
-	
+
 	</div>
 
 	<div class="tab-pane" id="rules">
@@ -181,7 +181,6 @@ if($status == 0){
 </div>
 
 
-
 <?php }  ?>
 </div>
 <h2>Comments</h2>
@@ -216,19 +215,19 @@ $comment_user_id  = $row['user_id'];
 <br /><br />
 <?php
 if(empty($_POST) == false){
-	
+
 	if(!$captcha->is_valid()) {
 		$errors[] = 'Captcha is incorrect! Try again.';
 	}
-	
+
 	if(strlen($_POST['comment']) > 254){
 		$errors[] = 'Comment too long, maximum 255 characters!';
 	}
-	
+
 	if(strlen(trim($_POST['comment'])) < 10){
 		$errors[] = 'Comment too short, minimum 10 characters!';
 	}
-	
+
 	if(empty($errors) == true){
 		$comment	= htmlspecialchars($_POST['comment'], ENT_QUOTES);
 		$database->query("INSERT INTO `comments` (`server_id`, `user_id`, `comment`) VALUES ('$server_id', '$session_user_id', '$comment')");
@@ -242,7 +241,7 @@ if(empty($_POST) == false){
 <form action="" method="post">
 	<textarea style="width:100%;height:100px;" name="comment"></textarea><br />
 	<?php $captcha->display(); ?>
-	
+
 	<input type="submit" class="btn btn-primary" value="Add comment" />
 </form>
 <?php } ?>

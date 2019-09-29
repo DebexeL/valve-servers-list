@@ -27,10 +27,9 @@ if(isset($_GET['username']) == true && empty($_GET['username']) == false){
 						<li>
 							<a href="adm_user_settings.php?update=<?php echo $user_id; ?>">
 								<span class="label label-info">
-									<i class="icon-wrench icon-white"></i> Edit User
+									<i class="icon-wrench icon-white"></i> Edit User 
 								</span>
-							</a>&nbsp;
-							
+							</a>
 							<a href="adm_user_settings.php?delete=<?php echo $user_id; ?>">
 								<span class="label label-important">
 									<i class="icon-remove icon-white"></i> Delete User
@@ -47,9 +46,9 @@ if(isset($_GET['username']) == true && empty($_GET['username']) == false){
 			<table class="table table-bordered" style="background:white;">
 				<thead>
 					<tr>
-						<th>Ip</th>
+						<th>Server Address</th>
 						<th>Status</th>
-						<th>details</th>
+						<th>Server Page</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -64,8 +63,13 @@ if(isset($_GET['username']) == true && empty($_GET['username']) == false){
 					<tr>
 						<td><?php if($vip == 1) echo "<font color='#ffac1e'>" . $row['ip'] . "</font>"; else echo $row['ip'] ?></td>
 						<td><?php if($status == 1) echo "Inactive server"; else echo "Active server"; ?></td>
-						<td><a href="server.php?id=<?php echo $row['id']; ?>"><img src="includes/img/icon_details.gif" title="Server Informations" /></a></td>
-
+						<td>
+							<a href="server.php?id=<?php echo $row['id']; ?>">
+								<span class="label label-info">
+									<i class="icon-info-sign icon-white"></i> Server Info
+								</span>
+							</a>
+						</td>
 					</tr>
 					
 					<?php

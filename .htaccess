@@ -1,6 +1,7 @@
-<IfModule mod_rewrite.c>
-	RewriteEngine On
-	
-	RewriteRule gradient_(.*)_(.*)_(.*)_(.*).png$ core/image/gradient_bg.php?width=$1&height=$2&top=$3&bot=$4 [NC]
-	RewriteRule profile-(.*)$ profile.php?username=$1 [NC]
-</IfModule>
+RewriteEngine On
+#Uncomment the two lines below (remove the '#') to force usage of HTTPS. Keep them commented if you do not have a SSL Certificate, which is be required for HTTPS.
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+Options -Indexes
+RewriteRule gradient_(.*)_(.*)_(.*)_(.*).png$ core/image/gradient_bg.php?width=$1&height=$2&top=$3&bot=$4 [NC]
+RewriteRule profile-(.*)$ profile.php?username=$1 [NC]
